@@ -10,7 +10,7 @@ def move_eva3d_files():
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
-    file_names = list('eva3d_deepfashion.py', 'calculate_fid.py')
+    file_names = ['eva3d_deepfashion.py']
 
     for file_name in file_names:
         source_path = os.path.join(source_folder, file_name)
