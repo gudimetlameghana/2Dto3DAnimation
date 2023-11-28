@@ -36,8 +36,8 @@ def download_dataset():
 
 def download_pretrained_eva3d():
     url = 'https://drive.google.com/uc?id=1SYPjxnHz3XPRhTarx_Lw8SG_iz16QUMU'
-    destination = 'models'
-    file_name = 'eva3d.pt'
+    destination = 'checkpoint/512x256_deepfashion/volume_renderer'
+    file_name = 'models_0420000.pt'
 
     download_file(url, destination, file_name)
 

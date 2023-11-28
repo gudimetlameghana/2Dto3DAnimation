@@ -8,6 +8,7 @@ from torch import nn
 from torch.nn import functional as F
 # from volume_renderer import VolumeFeatureRenderer
 # from op import FusedLeakyReLU, fused_leaky_relu, upfirdn2d
+from fused_act import fused_leaky_relu
 from pdb import set_trace as st
 
 from eva3d_deepfashion import VoxelHuman as EVA3D_DEEPFASHION_MODEL
@@ -53,14 +54,14 @@ class MappingLinear(nn.Module):
 
         self.activation = activation
 
-    # def forward(self, input):
-    #     if self.activation != None:
-    #         out = F.linear(input, self.weight)
-    #         out = fused_leaky_relu(out, self.bias, scale=1)
-    #     else:
-    #         out = F.linear(input, self.weight, bias=self.bias)
+    def forward(self, input):
+        if self.activation != None:
+            out = F.linear(input, self.weight)
+            out = fused_leaky_relu(out, self.bias, scale=1)
+        else:
+            out = F.linear(input, self.weight, bias=self.bias)
 
-    #     return out
+        return out
 
     # def __repr__(self):
     #     return (
