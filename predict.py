@@ -1,7 +1,7 @@
 import os
 import torch
 import trimesh
-from EVA3D.utils import extract_mesh_with_marching_cubes
+from classes import extract_mesh_with_marching_cubes
 
 
 def predict3d(g_ema, inference_params, dataset):
