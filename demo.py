@@ -1,6 +1,5 @@
 import torch
 from munch import *
-from torchvision import transforms
 
 from dataset import DeepFashionDataset
 from generator import Generator
@@ -15,7 +14,8 @@ if __name__ == "__main__":
     renderer_hp = hp.rendering
     smpl_hp = hp.smpl
 
-    eva3d = torch.load(model_hp.path, map_location=lambda storage, loc: storage)
+    eva3d = torch.load(
+        model_hp.path, map_location=lambda storage, loc: storage)
 
     g_ema = Generator(model_hp, renderer_hp, smpl_hp, ema=True).to("cuda")
     g_ema.load_state_dict(eva3d["g_ema"])

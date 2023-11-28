@@ -1,7 +1,5 @@
 *.pth
 *.pt
 __pycache__
-eva3d
-EVA3D
-evaluations
 models
+evaluations
