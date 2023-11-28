@@ -2,7 +2,8 @@ import torch
 from munch import *
 from torchvision import transforms
 
-from classes import DeepFashionDataset, VoxelHumanGenerator as Generator
+from dataset import DeepFashionDataset
+from model import VoxelHumanGenerator as Generator
 from params import HyperParameters
 from predict import predict3d
 
