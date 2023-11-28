@@ -3,47 +3,17 @@ from munch import *
 
 HyperParameters = Munch({
     'dataset': Munch({
-        'dataset_path': './data/DeepFashion',
+        'file_list_path': '/content/2Dto3DAnimation/data/DeepFashion/train_list.txt', # Path of the file list
+        'path': './data/DeepFashion', # Path of the DeepFashion dataset
         'random_flip': False,
         'gaussian_weighted_sampler': False,
         'sampler_std': 15
     }),
-    'experiment': Munch({
-        'config': None,
-        'expname': '512x256_deepfashion',
-        'ckpt': '420000',
-        'continue_training': False
-    }),
-    'training': Munch({
-        'checkpoints_dir': './checkpoint',
-        'iter': 300000,
-        'batch': 1,
-        'chunk': 1,
-        'val_n_sample': 8,
-        'd_reg_every': 16,
-        'g_reg_every': 4,
-        'local_rank': 0,
-        'mixing': 0.9,
-        'lr': 0.002,
-        'r1': 300,
-        'eikonal_lambda': 0.5,
-        'min_surf_lambda': 1.5,
-        'min_surf_beta': 100.0,
-        'path_regularize': 2,
-        'path_batch_shrink': 2,
-        'wandb': False,
-        'small_aug': False,
-        'adjust_gamma': False,
-        'gamma_lb': 20,
-        'glr': 2e-05,
-        'dlr': 0.0002,
-        'deltasdf': True,
-        'fid_path': ''
-    }),
     'inference': Munch({
-        'results_dir': './evaluations',
-        'truncation_ratio': 0.5,
-        'truncation_mean': 10000,
+        'file_name': 'mesh.obj', # File name of the output object
+        'path': '/content/2Dto3DAnimation/evaluations', # Path of the inference outputs
+        'truncation_mean': 10000, # Vectors count to calculate mean
+        'truncation_ratio': 0.5, # Diversity-Quality tradeoff. Higher ratio will generate more diverse results
         'identities': 1,
         'num_views_per_id': 1,
         'no_surface_renderings': False,
@@ -63,25 +33,16 @@ HyperParameters = Munch({
         'return_xyz': False
     }),
     'model': Munch({
-        'size': [256, 128],
-        'style_dim': 128,
+        'path': 'models/eva3d.pt', # Path of the pretrained model
+        'size': [256, 128], # Size of the generator nn
+        'style_dim': 128,  # Input dimensions for the generator nn
         'channel_multiplier': 2,
         'n_mlp': 8,
         'lr_mapping': 0.01,
-        'renderer_spatial_output_dim': [512, 256],
         'project_noise': False,
-        'smpl_model_folder': 'smpl_models',
-        'smpl_gender': 'neutral',
         'voxhuman_name': 'eva3d_deepfashion',
         'is_test': True,
         'freeze_renderer': False
-    }),
-    'camera': Munch({
-        'uniform': False,
-        'azim': 0.3,
-        'elev': 0.15,
-        'fov': 6,
-        'dist_radius': 0.12
     }),
     'rendering': Munch({
         'depth': 5,
@@ -103,4 +64,11 @@ HyperParameters = Munch({
         'render_video': False,
         'no_features_output': True,
         'offset_sampling': True
-    })})
+    }),
+    'smpl': Munch({
+        'gender': 'neutral', # Gender of the smpl model
+        'model_folder': 'smpl_models', # Path of the smpl models
+        'model_type': 'smpl', # Type of the model
+        'num_betas': 10 # Number of betas to build the layer
+    })
+})

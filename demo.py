@@ -3,29 +3,23 @@ from munch import *
 from torchvision import transforms
 
 from dataset import DeepFashionDataset
-from model import VoxelHumanGenerator as Generator
-from params import HyperParameters
+from generator import Generator
+from params import HyperParameters as hp
 from predict import predict3d
 
 
 if __name__ == "__main__":
-    opt = HyperParameters
+    dataset_hp = hp.dataset
+    inference_hp = hp.inference
+    model_hp = hp.model
+    renderer_hp = hp.rendering
+    smpl_hp = hp.smpl
 
-    eva3d = torch.load('models/eva3d.pt',
-                       map_location=lambda storage, loc: storage)
+    eva3d = torch.load(model_hp.path, map_location=lambda storage, loc: storage)
 
-    g_ema = Generator(opt.model, opt.rendering, ema=True,
-                      full_pipeline=False).to("cuda")
+    g_ema = Generator(model_hp, renderer_hp, smpl_hp, ema=True).to("cuda")
     g_ema.load_state_dict(eva3d["g_ema"])
 
-    # move inside dataset.py
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5), inplace=True)
-    ])
-    file_list = '/content/2Dto3DAnimation/data/DeepFashion/train_list.txt'
+    dataset = DeepFashionDataset(dataset_hp)
 
-    dataset = DeepFashionDataset(opt.dataset.dataset_path, transform, opt.model.size,
-                                 opt.model.renderer_spatial_output_dim, file_list)
-
-    predict3d(g_ema, opt.inference, dataset)
+    predict3d(g_ema, model_hp, dataset, inference_hp)
