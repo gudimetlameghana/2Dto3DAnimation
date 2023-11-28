@@ -42,11 +42,6 @@ def download_pretrained_eva3d():
     download_file(url, destination, file_name)
 
 
-def setup_eva3d_repo():
-    sys.path.append('/content/2Dto3DAnimation/EVA3D')
-
-
 if __name__ == "__main__":
     download_dataset()
-    download_pretrained_eva3d()
-    setup_eva3d_repo()
+    # download_pretrained_eva3d()

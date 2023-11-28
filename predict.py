@@ -13,8 +13,6 @@ def predict3d(g_ema, model_hp, dataset, inference_hp):
     g_ema.renderer.perturb = 0
 
     style_dim = model_hp.style_dim
-
-    _, beta, theta = dataset.sample_smpl_param()
     mean_latent = g_ema.mean_latent(inference_hp)
 
     styles = torch.randn(1, style_dim, device='cuda')
@@ -23,6 +21,8 @@ def predict3d(g_ema, model_hp, dataset, inference_hp):
         inference_hp,
         mean_latent
     )
+
+    _, beta, theta = dataset.sample_smpl_param()
 
     sdf = g_ema.renderer.marching_cube_posed(
         styles[0],
@@ -39,6 +39,6 @@ def predict3d(g_ema, model_hp, dataset, inference_hp):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    mesh_path = output_path + inference_hp.file_name
+    mesh_path = output_path + '/' + inference_hp.file_name
     with open(mesh_path, 'w') as f:
         mesh.export(f, file_type='obj')
