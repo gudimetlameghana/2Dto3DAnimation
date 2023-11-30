@@ -1,5 +1,6 @@
 *.pth
 *.pt
 __pycache__
-models
 evaluations
+models
+smpl_models
